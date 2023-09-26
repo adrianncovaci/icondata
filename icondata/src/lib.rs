@@ -267,7 +267,6 @@ impl From<WiIcon> for Icon {
     }
 }
 
-#[non_exhaustive]
 #[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Clone, Copy)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 #[cfg_attr(feature = "strum", derive(strum::EnumIter, strum::EnumVariantNames))]

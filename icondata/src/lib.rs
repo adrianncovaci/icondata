@@ -95,7 +95,7 @@ pub enum Icon {
     Vs(VsIcon),
     #[cfg(feature = "Wi")]
     Wi(WiIcon),
-    
+    Custom(CustomIcon),
 }
 impl From<Icon> for icondata_core::IconData {
     fn from(icon: Icon) -> Self {
@@ -136,7 +136,7 @@ impl From<Icon> for icondata_core::IconData {
             Icon::Vs(icon) => icondata_core::IconData::from(icon),
             #[cfg(feature = "Wi")]
             Icon::Wi(icon) => icondata_core::IconData::from(icon),
-            
+            Icon::Custom(icon) => icondata_core::IconData::from(icon),
         }
     }
 }
@@ -264,5 +264,43 @@ impl From<VsIcon> for Icon {
 impl From<WiIcon> for Icon {
     fn from(icon: WiIcon) -> Self {
         Self::Wi(icon)
+    }
+}
+
+#[non_exhaustive]
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Clone, Copy)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(feature = "strum", derive(strum::EnumIter, strum::EnumVariantNames))]
+pub struct CustomIcon {
+    pub style: Option<&'static str>,
+    pub x: Option<&'static str>,
+    pub y: Option<&'static str>,
+    pub width: Option<&'static str>,
+    pub height: Option<&'static str>,
+    pub view_box: Option<&'static str>,
+    pub stroke_linecap: Option<&'static str>,
+    pub stroke_linejoin: Option<&'static str>,
+    pub stroke_width: Option<&'static str>,
+    pub stroke: Option<&'static str>,
+    pub fill: Option<&'static str>,
+    pub data: &'static str,
+}
+
+impl From<CustomIcon> for icondata_core::IconData {
+    fn from(icon: CustomIcon) -> icondata_core::IconData {
+        Self {
+            style: icon.style,
+            x: icon.x,
+            y: icon.y,
+            width: icon.width,
+            height: icon.height,
+            view_box: icon.view_box,
+            stroke_linecap: icon.stroke_linecap,
+            stroke_linejoin: icon.stroke_linejoin,
+            stroke_width: icon.stroke_width,
+            stroke: icon.stroke,
+            fill: icon.fill,
+            data: icon.data,
+        }
     }
 }
